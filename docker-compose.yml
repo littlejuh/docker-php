@@ -1,34 +1,26 @@
-nginx:
-    image: tutum/nginx
-    ports:
-        - "80:80"
-    links:
-        - phpfpm
+version: "2"
+services:
+  nginx:
+      image: tutum/nginx
+      ports:
+          - "80:80"
+      volumes:
+          - ./nginx/default:/etc/nginx/sites-available/default
+          - ./nginx/default:/etc/nginx/sites-enabled/default
+          - ./logs/nginx-error.log:/var/log/nginx/error.log
+          - ./logs/nginx-access.log:/var/log/nginx/access.log
+  phpfpm:
+    build: ./php/
     volumes:
-        - ./nginx/default:/etc/nginx/sites-available/default
-        - ./nginx/default:/etc/nginx/sites-enabled/default
-
-        - ./logs/nginx-error.log:/var/log/nginx/error.log
-        - ./logs/nginx-access.log:/var/log/nginx/access.log
-phpfpm:
-  build: ./php/
-  ports:
-    - "81:81"
-    - "443:443"
-  volumes:
-    - ./public:/usr/share/nginx/html
-  links: 
-    - maria_db  
-maria_db:
-  image: mariadb
-  environment:
-    MYSQL_ROOT_PASSWORD: secret
-phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    links:
-        - maria_db:db
-    ports:
-        - 8181:80
+      - ./public:/usr/share/nginx/html  
+  db:
+    image: mariadb
     environment:
-        MYSQL_USERNAME: root
-        MYSQL_ROOT_PASSWORD: secret
+      MYSQL_ROOT_PASSWORD: secret
+  phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      ports:
+          - 8181:80
+      environment:
+          MYSQL_USERNAME: root
+          MYSQL_ROOT_PASSWORD: secret

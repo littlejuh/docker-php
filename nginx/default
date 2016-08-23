@@ -6,7 +6,7 @@ server {
     root /usr/share/nginx/html;
     index index.php index.html index.html;
     
-    server_name 192.168.99.100;
+    server_name 127.0.0.1;
 
     location / {
         try_files $uri /index.php$is_args$args;
@@ -19,4 +19,5 @@ server {
         fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
         include fastcgi_params;
     }
+    
 }
