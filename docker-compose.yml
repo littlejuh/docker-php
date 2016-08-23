@@ -22,7 +22,7 @@ phpfpm:
 maria_db:
   image: mariadb
   environment:
-    MYSQL_ROOT_PASSWORD: Securepass
+    MYSQL_ROOT_PASSWORD: secret
 phpmyadmin:
     image: phpmyadmin/phpmyadmin
     links:
@@ -31,4 +31,4 @@ phpmyadmin:
         - 8181:80
     environment:
         MYSQL_USERNAME: root
-        MYSQL_ROOT_PASSWORD: Securepass
+        MYSQL_ROOT_PASSWORD: secret
