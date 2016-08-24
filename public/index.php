@@ -1,15 +1,11 @@
 <?php
-echo "teste";
-  
-$hostname='127.0.0.1';
-$port = '3306';
+$hostname='db';
 $username='root';
 $password='secret';
 
 try {
-    $dbh = new PDO("mysql:host=$hostname;port=$port;",$username,$password);
-    $dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION); 
-    echo 'Conectou.';
+    $dbh = new PDO("mysql:host=$hostname;",$username,$password); 
+    echo 'Olá, conseguimos conectar! :)';
 }catch(PDOException $e){
-    	echo $e->getMessage();
+    echo $e->getMessage();
 }
